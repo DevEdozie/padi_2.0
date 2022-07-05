@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "346263172665",
+    "project_id": "padi-2-0",
+    "storage_bucket": "padi-2-0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346263172665:android:b2c0a888b2dd12e89dbfe8",
+        "android_client_info": {
+          "package_name": "com.creeds_code.padi_20"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346263172665-29gnlfnt3ujihsrjhpoup2p0ph12rub3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrfNvjGW0nJ54hz187WjDIRX6_W_eYkg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346263172665-29gnlfnt3ujihsrjhpoup2p0ph12rub3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

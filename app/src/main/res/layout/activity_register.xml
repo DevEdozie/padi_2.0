@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:id="@+id/register_layout"
     android:background="@drawable/clock_image"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,6 +31,7 @@
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -46,6 +48,7 @@
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
