@@ -19,11 +19,10 @@ public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     FirebaseAuth mAuth;
-    private int count;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        count = 0;
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -31,14 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //setContentView(R.layout.blank_activity);
-
-                if(count < 1) {
+                    printLoadMessage();
                     loginUser();
-                    count++;
-                }else if(count > 0){
-                    Toast.makeText(LoginActivity.this, "Please wait.......", Toast.LENGTH_LONG).show();
-                }
             }
         });
         binding.regText.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    //makeVisible();
-                    count = 0;
+                    printLoadedMessage();
                     if (task.isSuccessful()) {
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -75,20 +67,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-//    private void setVisibity() {
-//        if (binding.loginLayout.getVisibility() == View.VISIBLE) {
-//            binding.loginLayout.setVisibility(View.GONE);
-//        } else {
-//            binding.loginLayout.setVisibility(View.VISIBLE);
-//        }
-//    }
-//
-//    private void makeVisible(){
-//        binding.loginLayout.setVisibility(View.VISIBLE);
-//    }
-//
-//    private void makeInvisible(){
-//        binding.loginLayout.setVisibility(View.GONE);
-//    }
+    private void printLoadMessage(){
+        binding.loginBtn.setText("Please wait.");
+    }
+
+    private void printLoadedMessage(){
+        binding.loginBtn.setText("LOGIN");
+    }
+
 
 }
