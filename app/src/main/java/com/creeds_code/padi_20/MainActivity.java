@@ -1,9 +1,12 @@
 package com.creeds_code.padi_20;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.creeds_code.padi_20.databinding.ActivityMainBinding;
@@ -39,4 +42,24 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }
     }
+
+//    public void setNavigationDrawer(){}
+//    //add drawer toggle
+//    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,binding.drawerLayout,binding.toolbar,R.string.openDrawer,R.string.closeDrawer){
+//        @Override
+//        public void onDrawerOpened(View drawerView) {
+//            super.onDrawerOpened(drawerView);
+//        }
+//
+//        @Override
+//        public void onDrawerClosed(View drawerView) {
+//            super.onDrawerClosed(drawerView);
+//        }
+//    };
+//    binding.drawerLayout.setDrawerListener(toggle);
+//    toggle.syncState();
+//    //nav view listener
+//    binding.navView.setNavigationItemSelectedListener()
+
+
 }

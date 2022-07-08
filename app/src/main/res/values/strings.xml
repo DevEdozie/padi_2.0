@@ -6,4 +6,9 @@
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="login_here">Login here</string>
+    <string name="username">Michael</string>
+    <string name="user_email">useremail@gmail.com</string>
+    <string name="sign_out_text">Sign out</string>
+    <string name="openDrawer">Navigation drawer opening</string>
+    <string name="closeDrawer">Navigation drawer closing</string>
 </resources>

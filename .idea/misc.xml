@@ -4,9 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/AC/AndroidProjects/padi_20/app/src/main/res/layout/activity_login.xml" value="0.24444444444444444" />
-        <entry key="..\:/Users/AC/AndroidProjects/padi_20/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/AC/AndroidProjects/padi_20/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/AC/AndroidProjects/padi_20/app/src/main/res/layout/activity_register.xml" value="0.21302083333333333" />
         <entry key="..\:/Users/AC/AndroidProjects/padi_20/app/src/main/res/layout/blank_activity.xml" value="0.21197916666666666" />
+        <entry key="..\:/Users/AC/AndroidProjects/padi_20/app/src/main/res/layout/nav_header.xml" value="0.33" />
+        <entry key="..\:/Users/AC/AndroidProjects/padi_20/app/src/main/res/layout/toolbar_main.xml" value="0.21302083333333333" />
+        <entry key="..\:/Users/AC/AndroidProjects/padi_20/app/src/main/res/menu/menu_nav.xml" value="0.19895833333333332" />
       </map>
     </option>
   </component>
