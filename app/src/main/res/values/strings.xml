@@ -11,4 +11,6 @@
     <string name="sign_out_text">Sign out</string>
     <string name="openDrawer">Navigation drawer opening</string>
     <string name="closeDrawer">Navigation drawer closing</string>
+    <string name="schedule">Schedule</string>
+    <string name="calendar">Calendar</string>
 </resources>

@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    printLoadMessage();
                     loginUser();
             }
         });
@@ -55,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    printLoadedMessage();
                     if (task.isSuccessful()) {
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -67,13 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void printLoadMessage(){
-        binding.loginBtn.setText("Please wait.");
-    }
 
-    private void printLoadedMessage(){
-        binding.loginBtn.setText("LOGIN");
-    }
 
 
 }

@@ -30,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
         binding.regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                printLoadMessage();
                 registerUser();
             }
         });
@@ -57,7 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    printLoadedMessage();
                     if (task.isSuccessful()) {
                         Toast.makeText(RegisterActivity.this, "Successfully registered", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
@@ -69,13 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void printLoadMessage() {
-        binding.regBtn.setText("Please wait.");
-    }
 
-    private void printLoadedMessage() {
-        binding.regBtn.setText("SIGN IN");
-    }
 
 
 }
