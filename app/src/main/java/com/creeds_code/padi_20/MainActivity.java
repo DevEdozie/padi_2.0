@@ -1,13 +1,19 @@
 package com.creeds_code.padi_20;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.creeds_code.padi_20.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
@@ -18,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ActivityMainBinding binding;
     FirebaseAuth mAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,24 +34,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(binding.toolbar);
         mAuth = FirebaseAuth.getInstance();
         setNavigationDrawer();
-
-        binding.signOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        FirebaseUser user = mAuth.getCurrentUser();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        user = mAuth.getCurrentUser();
 //        if (user == null) {
 //            startActivity(new Intent(MainActivity.this, LoginActivity.class));
 //        }
-//    }
+    }
 
     public void setNavigationDrawer() {
         //add drawer toggle
@@ -57,8 +56,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        //TODO implement fragments to be created when the menu items are clicked
-        return false;
+        //Handle navigation view item clicks
+        int id = item.getItemId();
+        Fragment fragment = null;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (id == R.id.action_schedule) {
+            fragment = new ScheduleFragment();
+        } else if (id == R.id.action_calendar) {
+            fragment = new CalendarFragment();
+        } else if (id == R.id.action_sign_out) {
+            displayDialog();
+        }
+        if (fragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment);
+        }
+
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void displayDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+        builder.setTitle(R.string.logout_dialog_title)
+                .setMessage(R.string.logout_dialog_message)
+                .setIcon(R.drawable.ic_action_signout)
+                .setPositiveButton(R.string.action_ok_text, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        logoutUser();
+                    }
+                })
+                .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //SYSTEM DISMISSES DIALOG
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private void logoutUser() {
+        mAuth.signOut();
+        Toast.makeText(MainActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
     }
 
 }
