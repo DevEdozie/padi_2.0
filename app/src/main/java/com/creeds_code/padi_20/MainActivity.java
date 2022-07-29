@@ -12,10 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.creeds_code.padi_20.databinding.ActivityMainBinding;
+import com.creeds_code.padi_20.databinding.ContentMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,15 +27,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActivityMainBinding binding;
     FirebaseAuth mAuth;
     FirebaseUser user;
+    ContentMainBinding secondBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        secondBinding = ContentMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
         mAuth = FirebaseAuth.getInstance();
         setNavigationDrawer();
+        //Default Fragment Implementation
+        displayDefaultPage();
+    }
+
+    private void displayDefaultPage(){
+        Fragment fragment = new ScheduleFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.frame_layout, fragment);
+        ft.commit();
     }
 
     @Override
@@ -59,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Handle navigation view item clicks
         int id = item.getItemId();
         Fragment fragment = null;
-        FragmentManager fragmentManager = getSupportFragmentManager();
         if (id == R.id.action_schedule) {
             fragment = new ScheduleFragment();
         } else if (id == R.id.action_calendar) {
@@ -68,7 +80,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             displayDialog();
         }
         if (fragment != null) {
-            fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame_layout, fragment);
+            fragmentTransaction.commit();
         }
 
         binding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -104,6 +118,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toast.makeText(MainActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
 }
