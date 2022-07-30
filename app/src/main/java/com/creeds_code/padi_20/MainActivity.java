@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.frame_layout, fragment);
         ft.commit();
+        binding.navView.setCheckedItem(R.id.action_schedule);
     }
 
     @Override
