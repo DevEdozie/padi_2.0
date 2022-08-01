@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(binding.toolbar);
         mAuth = FirebaseAuth.getInstance();
         setNavigationDrawer();
-        //Default Fragment Implementation
         displayDefaultPage();
     }
 
