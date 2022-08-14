@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.creeds_code.padi_20.databinding.ActivityMainBinding;
 import com.creeds_code.padi_20.databinding.ContentMainBinding;
@@ -27,26 +31,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActivityMainBinding binding;
     FirebaseAuth mAuth;
     FirebaseUser user;
-    ContentMainBinding secondBinding;
+    NavigationView navigationView;
+    DrawerLayout drawerLayout;
+    RecyclerView recyclerView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        secondBinding = ContentMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
         mAuth = FirebaseAuth.getInstance();
         setNavigationDrawer();
         displayDefaultPage();
+        onFabClicked();
+    }
+
+    private void onFabClicked() {
+        binding.contentMain.createNewScheduleFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,ScheduleActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void displayDefaultPage(){
-        Fragment fragment = new ScheduleFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.frame_layout, fragment);
-        ft.commit();
-        binding.navView.setCheckedItem(R.id.action_schedule);
+        navigationView.getMenu().findItem(R.id.action_schedule).setChecked(true);
+        recyclerView = binding.contentMain.recyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new ScheduleRecyclerAdapter(this,DataManager.schedules));
     }
 
     @Override
@@ -59,33 +76,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void setNavigationDrawer() {
+        navigationView = binding.navView;
+        drawerLayout = binding.drawerLayout;
         //add drawer toggle
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.openDrawer, R.string.closeDrawer);
-        binding.drawerLayout.addDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         //navigation view
-        binding.navView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         //Handle navigation view item clicks
-        int id = item.getItemId();
-        Fragment fragment = null;
-        if (id == R.id.action_schedule) {
-            fragment = new ScheduleFragment();
-        } else if (id == R.id.action_calendar) {
-            fragment = new CalendarFragment();
-        } else if (id == R.id.action_sign_out) {
-            displayDialog();
-        }
-        if (fragment != null) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.frame_layout, fragment);
-            fragmentTransaction.commit();
-        }
 
-        binding.drawerLayout.closeDrawer(GravityCompat.START);
+
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -122,8 +128,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding.drawerLayout.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
