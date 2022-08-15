@@ -1,5 +1,7 @@
 package com.creeds_code.padi_20;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class Schedule {
@@ -14,6 +16,7 @@ public class Schedule {
         this.time = time;
         this.text = text;
     }
+
 
     public String getTitle() {
         return title;

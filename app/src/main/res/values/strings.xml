@@ -23,4 +23,8 @@
     <string name="description">Description</string>
     <string name="time">Time</string>
     <string name="text">Text</string>
+    <string name="new_schedule">New Schedule</string>
+    <string name="new_schedule_dialog_message">Do you want to create a new schedule or update previous one?</string>
+    <string name="action_create_text">"Create "</string>
+    <string name="update">Update</string>
 </resources>
