@@ -1,6 +1,8 @@
 package com.creeds_code.padi_20;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,9 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
     private Context context;
 
 
+    public ScheduleRecyclerAdapter(){
+        //DO NOTHING
+    }
 
     public ScheduleRecyclerAdapter( Context context, ArrayList<Schedule> schedules) {
         this.schedules = schedules;
@@ -41,6 +46,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
         Schedule schedule = schedules.get(position);
         holder.title.setText(schedule.getTitle());
         holder.time.setText(schedule.getTime());
+        holder.description.setText(schedule.getText());
         //get position
         holder.notePosition = holder.getAdapterPosition();
 
@@ -53,26 +59,28 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView title;
-        TextView time;
-        ImageView delete;
+        private TextView title;
+        private TextView time;
+        private TextView description;
         int notePosition;
 
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             title = itemView.findViewById(R.id.text_title);
             time = itemView.findViewById(R.id.time_text);
-            delete = itemView.findViewById(R.id.delete_icon);
-            //set recyclerview listener
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context,ScheduleActivity.class);
-                    intent.putExtra(Constants.NOTE_POSITION,notePosition);
-                    context.startActivity(intent);
-                    Toast.makeText(context,"Opening note",Toast.LENGTH_LONG).show();
-                }
-            });
+            description = itemView.findViewById(R.id.text_description);
+
+//            //set recyclerview listener
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent intent = new Intent(context,ScheduleActivity.class);
+//                    intent.putExtra(Constants.NOTE_POSITION,notePosition);
+//                    context.startActivity(intent);
+//                    Toast.makeText(context,"Opening note",Toast.LENGTH_LONG).show();
+//                }
+//            });
         }
+
     }
 }

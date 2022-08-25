@@ -1,6 +1,9 @@
 package com.creeds_code.padi_20;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.creeds_code.padi_20.databinding.ActivityScheduleBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 public class ScheduleActivity extends AppCompatActivity {
 
@@ -26,7 +30,10 @@ public class ScheduleActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         displayNote();
         onFabClicked();
+
     }
+
+
 
     private void displayNote(){
         defaultValue = -1;
@@ -38,7 +45,6 @@ public class ScheduleActivity extends AppCompatActivity {
         }
 
     }
-
    public String getSetTIme(){
         return "Time";
    }
@@ -90,7 +96,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private void authenticateFabAction(){
         AlertDialog.Builder builder = new AlertDialog.Builder(ScheduleActivity.this);
         LayoutInflater inflater = ScheduleActivity.this.getLayoutInflater();
-        builder.setTitle(R.string.new_schedule)
+        builder.setTitle(R.string.schedule)
                 .setMessage(R.string.new_schedule_dialog_message)
                 .setIcon(R.drawable.ic_schedule)
                 .setPositiveButton(R.string.action_create_text, new DialogInterface.OnClickListener() {
@@ -109,4 +115,7 @@ public class ScheduleActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
+
 }

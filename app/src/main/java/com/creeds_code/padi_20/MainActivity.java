@@ -17,12 +17,14 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.creeds_code.padi_20.databinding.ActivityMainBinding;
 import com.creeds_code.padi_20.databinding.ContentMainBinding;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     RecyclerView recyclerView;
-
+    ScheduleRecyclerAdapter recyclerAdapter;
 
 
     @Override
@@ -47,6 +49,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setNavigationDrawer();
         displayDefaultPage();
         onFabClicked();
+        setHelper();
+    }
+
+    private void setHelper(){
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                //get the position of the selected view
+                int position = viewHolder.getAdapterPosition();
+
+                //get the item at the particular position
+                Schedule deletedSchedule = DataManager.schedules.get(position);
+
+                //remove the selected item
+                DataManager.schedules.remove(position);
+
+                //notify the adapter that an item has been removed
+                recyclerAdapter.notifyItemRemoved(position);
+
+                //display a snackbar with action
+                Snackbar.make(recyclerView,deletedSchedule.getTitle(),Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //add the item back to the arraylist and at the same position
+                        DataManager.schedules.add(position,deletedSchedule);
+
+                        //notify adapter that an item has been inserted
+                        recyclerAdapter.notifyItemInserted(position);
+                    }
+                }).show();
+            }
+        });
     }
 
     private void onFabClicked() {
@@ -62,8 +101,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void displayDefaultPage(){
         navigationView.getMenu().findItem(R.id.action_schedule).setChecked(true);
         recyclerView = binding.contentMain.recyclerView;
+        recyclerAdapter = new ScheduleRecyclerAdapter(this,DataManager.schedules);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new ScheduleRecyclerAdapter(this,DataManager.schedules));
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
     @Override
@@ -133,6 +173,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void deleteSchedule(int position){
+        DataManager.deleteSchedule(position);
+        recyclerAdapter.notifyItemRemoved(position);
     }
 
 }

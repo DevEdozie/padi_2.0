@@ -8,4 +8,8 @@ class DataManager {
     public static void addNewSchedule(String title,String time, String text){
         schedules.add(new Schedule(title,time,text));
     }
+
+    public static void deleteSchedule(int position){
+        schedules.remove(position);
+    }
 }
