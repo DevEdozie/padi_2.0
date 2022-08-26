@@ -24,11 +24,6 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
     private ArrayList<Schedule> schedules;
     private Context context;
 
-
-    public ScheduleRecyclerAdapter(){
-        //DO NOTHING
-    }
-
     public ScheduleRecyclerAdapter( Context context, ArrayList<Schedule> schedules) {
         this.schedules = schedules;
         this.context = context;
@@ -57,7 +52,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
         return schedules.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView title;
         private TextView time;
@@ -71,15 +66,15 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
             description = itemView.findViewById(R.id.text_description);
 
 //            //set recyclerview listener
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(context,ScheduleActivity.class);
-//                    intent.putExtra(Constants.NOTE_POSITION,notePosition);
-//                    context.startActivity(intent);
-//                    Toast.makeText(context,"Opening note",Toast.LENGTH_LONG).show();
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context,ScheduleActivity.class);
+                    intent.putExtra(Constants.NOTE_POSITION,notePosition);
+                    context.startActivity(intent);
+                    Toast.makeText(context,"Opening note",Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
     }

@@ -21,6 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/teal_200"
             android:theme="@android:style/Theme.Material"
+            android:layout_margin="8dp"
             android:translationZ="4dp">
 
         </androidx.appcompat.widget.Toolbar>
